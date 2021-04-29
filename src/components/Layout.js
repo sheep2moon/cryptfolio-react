@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: theme.mixins.toolbar,
   page: {
-    background: '#fafafa',
+    background: '#1a237e',
     width: '100%',
   },
 }));
