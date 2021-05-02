@@ -21,6 +21,15 @@ const Row = ({ coin, setModalCoin }) => {
         <div>
           <p>{coin.high_24h} $</p>
         </div>
+        <div
+          style={
+            coin.price_change_percentage_24h > 0
+              ? { color: 'green' }
+              : { color: 'red' }
+          }
+        >
+          <p>{coin.price_change_percentage_24h.toFixed(2)} %</p>
+        </div>
       </div>
     </>
   );

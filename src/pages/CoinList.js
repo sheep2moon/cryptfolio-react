@@ -1,5 +1,5 @@
 import { Avatar, Card, CardHeader, Container, Modal } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useCrypto } from '../contexts/CryptoContext';
 
@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  searchInput: {
+    backgroundColor: '#fff',
+    width: '30%',
   },
 }));
 

@@ -36,9 +36,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   toolbar: theme.mixins.toolbar,
+  toolbarButton: {
+    marginLeft: '1.5rem',
+    color: '#fff',
+  },
   page: {
-    background: '#1a237e',
+    background: '#181818',
     width: '100%',
+  },
+  drawerCloseButton: {
+    width: '100%',
+    padding: '1rem',
   },
 }));
 
@@ -63,17 +71,18 @@ const Layout = ({ children }) => {
     <div className={classes.root}>
       {/*Menu górne AppBar*/}
       <AppBar color='primary' className={classes.appbar}>
-        <Toolbar
-          className={classes.toolbar}
-          onClick={() => setIsDrawerOpen(true)}
-        >
-          <IconButton>
+        <Toolbar className={classes.toolbar} color='primary'>
+          <IconButton
+            className={classes.toolbarButton}
+            onClick={() => setIsDrawerOpen(true)}
+          >
             <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
       {/*Wysuwane menu boczne*/}
       <SwipeableDrawer
+        color='primary'
         open={isDrawerOpen}
         className={classes.drawer}
         onOpen={() => setIsDrawerOpen(true)}
@@ -82,7 +91,11 @@ const Layout = ({ children }) => {
         <List className={classes.drawerList}>
           {/*Zamknij menu boczne*/}
           <ListItem className={classes.listItem}>
-            <Button onClick={() => setIsDrawerOpen(false)} color='primary'>
+            <Button
+              onClick={() => setIsDrawerOpen(false)}
+              color='primary'
+              className={classes.drawerCloseButton}
+            >
               <CloseIcon />
             </Button>
           </ListItem>

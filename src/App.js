@@ -1,6 +1,6 @@
 import './App.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { cyan, indigo } from '@material-ui/core/colors';
+import { cyan, teal } from '@material-ui/core/colors';
 import Layout from './components/Layout';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Portfolio from './pages/Portfolio';
@@ -9,7 +9,7 @@ import CryptoProvider from './contexts/CryptoContext';
 
 const theme = createMuiTheme({
   palette: {
-    primary: indigo,
+    primary: teal,
     secondary: cyan,
   },
   typography: {
@@ -18,6 +18,9 @@ const theme = createMuiTheme({
     fontWeightRegular: 500,
     fontWeightMedium: 600,
     fontWeightBold: 700,
+  },
+  paper: {
+    backgroundColor: '#181818',
   },
 });
 

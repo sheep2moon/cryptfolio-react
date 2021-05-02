@@ -3,6 +3,10 @@
   font-family: 'Quicksand';
 }
 body {
-  background-color: #311b92;
-  color: white;
+  color: #fff;
+  background-color: #181818;
+}
+.MuiDrawer-paper {
+  background-color: #181818 !important;
+  color: #fff !important;
 }

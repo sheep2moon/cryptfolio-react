@@ -10,16 +10,35 @@ const url =
   'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false';
 
 const CryptoProvider = ({ children }) => {
+  const [allCoins, setAllCoins] = useState([]);
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState();
 
   const getCoins = async () => {
     setIsLoading(true);
     const response = await fetch(url);
     const coins = await response.json();
+    setAllCoins(coins);
     setCoins(coins);
     setIsLoading(false);
   };
+
+  const getSearchCoins = () => {
+    const newCoins = allCoins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(searchTerm) ||
+        coin.symbol.toLowerCase().includes(searchTerm)
+    );
+
+    setCoins(newCoins);
+  };
+  useEffect(() => {
+    if (!isLoading) {
+      setCoins(coins);
+      getSearchCoins();
+    }
+  }, [searchTerm]);
 
   useEffect(() => {
     getCoins();
@@ -27,6 +46,7 @@ const CryptoProvider = ({ children }) => {
 
   const value = {
     coins,
+    setSearchTerm,
   };
 
   return (
