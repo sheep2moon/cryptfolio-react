@@ -9,13 +9,16 @@ import {
   SwipeableDrawer,
   IconButton,
   AppBar,
+  Typography,
 } from '@material-ui/core';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import CloseIcon from '@material-ui/icons/Close';
 import MenuIcon from '@material-ui/icons/Menu';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router';
+import { useFire } from '../contexts/FireContext';
 
 const drawerWidth = 280;
 
@@ -37,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: theme.mixins.toolbar,
   toolbarButton: {
-    marginLeft: '1.5rem',
     color: '#fff',
   },
   page: {
@@ -54,6 +56,7 @@ const Layout = ({ children }) => {
   const history = useHistory();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const classes = useStyles();
+  const { user } = useFire();
   const menuItems = [
     {
       text: 'Lista',
@@ -64,6 +67,11 @@ const Layout = ({ children }) => {
       text: 'Portfolio',
       icon: <AccountBalanceWalletIcon color='primary' />,
       path: '/portfolio',
+    },
+    {
+      text: 'Login',
+      icon: <VpnKeyIcon color='primary' />,
+      path: '/login',
     },
   ];
 
@@ -78,6 +86,7 @@ const Layout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
+          {user && <Typography>{user.email}</Typography>}
         </Toolbar>
       </AppBar>
       {/*Wysuwane menu boczne*/}

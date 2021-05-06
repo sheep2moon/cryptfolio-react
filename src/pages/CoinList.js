@@ -38,7 +38,9 @@ const CoinList = () => {
     <Container>
       <ColumnNames />
       {coins &&
-        coins.map((coin) => <Row coin={coin} setModalCoin={setModalCoin} />)}
+        coins.map((coin) => (
+          <Row key={coin.symbol} coin={coin} setModalCoin={setModalCoin} />
+        ))}
       {modalCoin && (
         <Modal open={modalCoin} onClose={handleClose} className={classes.modal}>
           <Card>
