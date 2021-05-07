@@ -13,8 +13,13 @@ const FireProvider = ({ children }) => {
 
   const register = (email, password) =>
     auth.createUserWithEmailAndPassword(email, password);
-  const login = (email, password) =>
-    auth.signInWithEmailAndPassword(email, password);
+  const login = (email, password) => {
+    try {
+      auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const logout = () => auth.signOut();
   const resetPassword = (email) => auth.sendPasswordResetEmail(email);
   const updateEmail = (email) => user.updateEmail(email);

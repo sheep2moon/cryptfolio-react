@@ -1,24 +1,32 @@
 import React from 'react';
 import '../../styles/rowStyle.css';
 
-const Row = ({ coin, setModalCoin }) => {
+const Row = ({ coin, setModalCoin, setIsModalOpen }) => {
   return (
     <>
-      <div className='row-container' onClick={() => setModalCoin(coin)}>
+      <div
+        className='row-container'
+        onClick={() => {
+          setModalCoin(coin);
+          setIsModalOpen(true);
+        }}
+      >
         <div className='row-name-container'>
-          <img src={coin.image} width='60' alt='' />
+          <div className='row-name-img'>
+            <img src={coin.image} width='60' alt='' />
+          </div>
           <p>{coin.name}</p>
         </div>
         <div>
           <p>{coin.current_price} $</p>
         </div>
-        <div>
+        <div className='column-mobile-hidden column-medium-hidden'>
           <p>{coin.market_cap} $</p>
         </div>
-        <div>
+        <div className='column-mobile-hidden'>
           <p>{coin.low_24h} $</p>
         </div>
-        <div>
+        <div className='column-mobile-hidden'>
           <p>{coin.high_24h} $</p>
         </div>
         <div

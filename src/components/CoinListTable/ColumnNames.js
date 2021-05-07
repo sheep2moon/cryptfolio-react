@@ -19,19 +19,19 @@ const ColumnNames = () => {
           />
         </div>
         <div>
-          <p>Cena</p>
+          <p>Price</p>
         </div>
-        <div>
+        <div className='column-mobile-hidden column-medium-hidden'>
           <p>Market Cap</p>
         </div>
-        <div>
-          <p> Minimum 24h</p>
+        <div className='column-mobile-hidden'>
+          <p> Min 24h</p>
+        </div>
+        <div className='column-mobile-hidden'>
+          <p> Max 24h</p>
         </div>
         <div>
-          <p> Maximum 24h</p>
-        </div>
-        <div>
-          <p> Zmiana % 24h</p>
+          <p>24h Change</p>
         </div>
       </div>
     </>

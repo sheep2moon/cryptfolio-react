@@ -1,6 +1,6 @@
 .row-container {
   display: grid;
-  grid-template-columns: 1fr 0.5fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 0.5fr 1fr 0.8fr 0.8fr 0.6fr;
   text-align: end;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-top: none;
@@ -16,8 +16,33 @@
   display: flex;
   align-items: center;
 }
-.row-name-container img {
+.row-name-container p {
+  text-align: start;
+}
+.row-name-img {
   margin-right: 1rem;
+  padding: 0.2rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+/*Mobile*/
+@media screen and (max-width: 1100px) {
+  .row-container {
+    grid-template-columns: 1fr 0.5fr 0.8fr 0.8fr 0.6fr;
+  }
+  .column-medium-hidden {
+    display: none;
+  }
+}
+@media screen and (max-width: 800px) {
+  .row-container {
+    grid-template-columns: 1fr 0.5fr 0.4fr;
+  }
+  .column-mobile-hidden {
+    display: none;
+  }
 }
 /*Column names*/
 
@@ -31,5 +56,4 @@
 }
 .search-coins-input {
   width: 100%;
-  background: #fff;
 }

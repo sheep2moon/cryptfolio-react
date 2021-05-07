@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, user } = useFire();
+  const { login, user, logout } = useFire();
   const [isDisabled, setIsDisabled] = useState(false);
   const [error, setError] = useState();
   const history = useHistory();
@@ -45,6 +45,7 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(emailRef.current.value);
     try {
       setError('');
       setIsDisabled(true);
@@ -57,7 +58,21 @@ const Login = () => {
       setIsDisabled(false);
     }
   }
-
+  console.log(user);
+  if (user) {
+    return (
+      <>
+        <Container className={classes.container}>
+          <Paper className={classes.paper}>
+            <Typography>Already logged in as a {user.email}</Typography>
+            <Button className={classes.button} onClick={logout} color='primary'>
+              Logout
+            </Button>
+          </Paper>
+        </Container>
+      </>
+    );
+  }
   return (
     <>
       <Container className={classes.container}>
@@ -67,14 +82,15 @@ const Login = () => {
           <TextField
             className={classes.textField}
             label='e-mail'
-            ref={emailRef}
+            inputRef={emailRef}
             variant='filled'
           />
           <TextField
             className={classes.textField}
             label='password'
-            ref={passwordRef}
+            inputRef={passwordRef}
             variant='filled'
+            type='password'
           />
           <Button
             className={classes.button}
@@ -87,7 +103,13 @@ const Login = () => {
           </Button>
 
           <p>No account?</p>
-          <Link to='/register'>Register</Link>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={() => history.push('/register')}
+          >
+            Register
+          </Button>
         </Paper>
       </Container>
     </>

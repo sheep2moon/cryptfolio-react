@@ -28,7 +28,7 @@ const CoinList = () => {
   const classes = useStyles();
   const { coins } = useCrypto();
   const [modalCoin, setModalCoin] = useState();
-  console.log(coins);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClose = () => {
     setModalCoin(null);
@@ -39,10 +39,19 @@ const CoinList = () => {
       <ColumnNames />
       {coins &&
         coins.map((coin) => (
-          <Row key={coin.symbol} coin={coin} setModalCoin={setModalCoin} />
+          <Row
+            key={coin.symbol}
+            coin={coin}
+            setModalCoin={setModalCoin}
+            setIsModalOpen={setIsModalOpen}
+          />
         ))}
       {modalCoin && (
-        <Modal open={modalCoin} onClose={handleClose} className={classes.modal}>
+        <Modal
+          open={isModalOpen}
+          onClose={handleClose}
+          className={classes.modal}
+        >
           <Card>
             <CardHeader
               avatar={

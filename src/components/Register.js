@@ -14,11 +14,15 @@ const Register = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let password = passwordRef.current.value;
+    let confirmPassword = passwordRef.current.value;
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (password !== confirmPassword) {
       return setError('password do not match');
     }
-
+    if (password.length < 6) {
+      return setError('Password must be at least 6 characters length');
+    }
     try {
       setError('');
       setIsDisabled(true);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Toolbar,
@@ -55,8 +55,9 @@ const useStyles = makeStyles((theme) => ({
 const Layout = ({ children }) => {
   const history = useHistory();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [loginButtonText, setLoginButtonText] = useState('Login');
   const classes = useStyles();
-  const { user } = useFire();
+  const { user, logout } = useFire();
   const menuItems = [
     {
       text: 'Lista',
@@ -68,13 +69,24 @@ const Layout = ({ children }) => {
       icon: <AccountBalanceWalletIcon color='primary' />,
       path: '/portfolio',
     },
-    {
-      text: 'Login',
-      icon: <VpnKeyIcon color='primary' />,
-      path: '/login',
-    },
   ];
 
+  const handleLoginButton = () => {
+    console.log(user);
+    if (user) {
+      logout();
+      history.push('/');
+    } else {
+      history.push('/login');
+    }
+  };
+  useEffect(() => {
+    if (user) {
+      setLoginButtonText('Logout');
+    } else {
+      setLoginButtonText('Login');
+    }
+  }, [user]);
   return (
     <div className={classes.root}>
       {/*Menu górne AppBar*/}
@@ -123,6 +135,19 @@ const Layout = ({ children }) => {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
+          <ListItem
+            className={classes.listItem}
+            button
+            onClick={() => {
+              handleLoginButton();
+              setIsDrawerOpen(false);
+            }}
+          >
+            <ListItemIcon>
+              <VpnKeyIcon color='primary' />
+            </ListItemIcon>
+            <ListItemText primary={loginButtonText} />
+          </ListItem>
         </List>
       </SwipeableDrawer>
       <div className={classes.page}>
