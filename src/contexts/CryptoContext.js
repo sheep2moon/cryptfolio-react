@@ -24,19 +24,14 @@ const CryptoProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const getSearchCoins = () => {
-    const newCoins = allCoins.filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(searchTerm) ||
-        coin.symbol.toLowerCase().includes(searchTerm)
-    );
-
-    setCoins(newCoins);
-  };
   useEffect(() => {
     if (!isLoading) {
-      setCoins(coins);
-      getSearchCoins();
+      const newCoins = allCoins.filter(
+        (coin) =>
+          coin.name.toLowerCase().includes(searchTerm) ||
+          coin.symbol.toLowerCase().includes(searchTerm)
+      );
+      setCoins(newCoins);
     }
   }, [searchTerm]);
 

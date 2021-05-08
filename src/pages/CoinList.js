@@ -1,31 +1,12 @@
-import { Avatar, Card, CardHeader, Container, Modal } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useCrypto } from '../contexts/CryptoContext';
 
 import Row from '../components/CoinListTable/Row';
 import ColumnNames from '../components/CoinListTable/ColumnNames';
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  searchInput: {
-    backgroundColor: '#fff',
-    width: '30%',
-  },
-}));
+import CoinDetailsModal from '../components/CoinDetailsModal';
 
 const CoinList = () => {
-  const classes = useStyles();
   const { coins } = useCrypto();
   const [modalCoin, setModalCoin] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,21 +28,9 @@ const CoinList = () => {
           />
         ))}
       {modalCoin && (
-        <Modal
-          open={isModalOpen}
-          onClose={handleClose}
-          className={classes.modal}
-        >
-          <Card>
-            <CardHeader
-              avatar={
-                <Avatar>
-                  <img src={modalCoin.image} width='60' alt='' />
-                </Avatar>
-              }
-            />
-          </Card>
-        </Modal>
+        <CoinDetailsModal
+          props={{ isModalOpen, modalCoin, handleClose }}
+        ></CoinDetailsModal>
       )}
     </Container>
   );

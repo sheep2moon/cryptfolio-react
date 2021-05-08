@@ -4,7 +4,6 @@ import {
   Paper,
   TextField,
   Typography,
-  Link,
   Container,
 } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
@@ -76,8 +75,8 @@ const Login = () => {
   return (
     <>
       <Container className={classes.container}>
-        <div className='error-container'>{error && <p>{error}</p>}</div>
         <Paper className={classes.paper}>
+          <div className='error-container'>{error && <p>{error}</p>}</div>
           <Typography>Enter the following:</Typography>
           <TextField
             className={classes.textField}
