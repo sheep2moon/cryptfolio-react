@@ -70,7 +70,7 @@ const Layout = ({ children }) => {
       path: '/portfolio',
     },
   ];
-
+  console.log(user);
   const handleLoginButton = () => {
     console.log(user);
     if (user) {

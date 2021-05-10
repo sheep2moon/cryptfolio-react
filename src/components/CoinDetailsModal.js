@@ -3,6 +3,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import '../styles/coinModal.css';
+import AddCoin from './AddCoin';
+import { useFire } from '../contexts/FireContext';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -22,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CoinDetailsModal = ({ props }) => {
+  const { user } = useFire();
   const classes = useStyles();
   const { isModalOpen, handleClose, modalCoin } = props;
-  console.log(modalCoin);
 
   return (
     <Container>
@@ -74,6 +76,7 @@ const CoinDetailsModal = ({ props }) => {
                 </li>
               </ul>
             </div>
+            {user && <AddCoin modalCoin={modalCoin} />}
           </div>
         </Paper>
       </Modal>

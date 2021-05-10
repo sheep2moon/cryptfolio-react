@@ -33,6 +33,7 @@ const CryptoProvider = ({ children }) => {
       );
       setCoins(newCoins);
     }
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   useEffect(() => {

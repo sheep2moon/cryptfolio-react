@@ -44,6 +44,11 @@
   margin: 0 10px;
 }
 
+.add-coin-container {
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 800px) {
   .coin-details-list ul {
     grid-template-columns: 1fr;
