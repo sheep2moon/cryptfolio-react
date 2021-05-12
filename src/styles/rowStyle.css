@@ -47,8 +47,13 @@
 /*Column names*/
 
 .column-names {
+  align-items: center;
   margin-top: 3rem;
-  background-color: #363636;
+  margin-bottom: 20px;
+  background-color: #ffffff10;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 6px 10px #ffffff20;
 }
 .column-names:hover {
   background-color: #363636;

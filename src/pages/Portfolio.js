@@ -1,20 +1,99 @@
-import React, { useState } from 'react';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Container,
+  makeStyles,
+} from '@material-ui/core';
+import ShopOutlinedIcon from '@material-ui/icons/ShopOutlined';
+import AttachMoneyOutlinedIcon from '@material-ui/icons/AttachMoneyOutlined';
+import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+
+import React, { useEffect, useState } from 'react';
 import { useCrypto } from '../contexts/CryptoContext';
 import { useFire } from '../contexts/FireContext';
 import useFirestore from '../hooks/useFirestore';
 import '../styles/portfolio.css';
+import { teal } from '@material-ui/core/colors';
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    backgroundColor: teal[500],
+    color: '#fff',
+  },
+}));
 
 const Portfolio = () => {
+  const classes = useStyles();
+
   const { user } = useFire();
   const { coins } = useCrypto();
   const { docs } = useFirestore(user.uid, 'coins');
-  const [walletValue, setWalletValue] = useState(0);
-  console.log(docs);
+  const [walletStats, setWalletStats] = useState({});
 
-  let currentCoin;
+  useEffect(() => {
+    let sumDiff = 0;
+    let sumCurrent = 0;
+    let sumBuy = 0;
+    docs.forEach((coin) => {
+      const currentCoin = coins.find((lcoin) => lcoin.id === coin.id);
+      const buyForSum = parseFloat(coin.buyPrice) * parseFloat(coin.quantity);
+      const currentSum = currentCoin.current_price * parseFloat(coin.quantity);
+      const diff = currentSum - buyForSum;
+      sumDiff += diff;
+      sumCurrent += currentSum;
+      sumBuy += buyForSum;
+    });
+
+    setWalletStats({
+      buyFor: sumBuy,
+      current: sumCurrent,
+      difference: sumDiff,
+    });
+  }, [docs, coins]);
 
   return (
     <>
+      <Container>
+        <List>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                <ShopOutlinedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary='Total wallet buy price: '
+              secondary={walletStats.buyFor}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                <AttachMoneyOutlinedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary='Wallet current value: '
+              secondary={walletStats.current}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                <MonetizationOnOutlinedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary='Wallet profit/loss: '
+              secondary={walletStats.difference}
+            />
+          </ListItem>
+        </List>
+      </Container>
+
       <div className='portfolio-list'>
         <div className='portfolio-list-grid portfolio-list-column-names'>
           <p>Coin</p>
@@ -25,7 +104,7 @@ const Portfolio = () => {
         </div>
 
         {docs.map(({ coinName, id, quantity, buyPrice }) => {
-          currentCoin = coins.find((coin) => coin.id === id);
+          const currentCoin = coins.find((coin) => coin.id === id);
           let priceDifference =
             currentCoin.current_price * parseFloat(quantity) -
             parseFloat(buyPrice) * parseFloat(quantity);
