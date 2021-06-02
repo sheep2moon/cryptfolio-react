@@ -4,7 +4,7 @@ import '../styles/coinModal.css';
 import { timestamp, fireStore } from '../firebase/config';
 import { useFire } from '../contexts/FireContext';
 
-const AddCoin = ({ modalCoin }) => {
+const AddCoin = ({ modalCoin, setIsModalOpen }) => {
   const quantityRef = useRef();
   const buyForRef = useRef();
   const [errors, setErrors] = useState({});
@@ -37,6 +37,7 @@ const AddCoin = ({ modalCoin }) => {
       .catch((error) => {
         console.log('errror writing document', error);
       });
+    setIsModalOpen(false);
   };
 
   return (

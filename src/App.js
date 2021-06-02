@@ -9,6 +9,7 @@ import CryptoProvider from './contexts/CryptoContext';
 import FireProvider from './contexts/FireContext';
 import Login from './components/Login';
 import Register from './components/Register';
+import PrivateRoute from './PrivateRoute';
 
 const theme = createMuiTheme({
   palette: {
@@ -40,9 +41,8 @@ function App() {
                 <Route exact path='/'>
                   <CoinList />
                 </Route>
-                <Route exact path='/portfolio'>
-                  <Portfolio />
-                </Route>
+                <PrivateRoute exact path='/portfolio' component={Portfolio} />
+
                 <Route path='/login' component={Login} />
                 <Route path='/register' component={Register} />
               </Switch>

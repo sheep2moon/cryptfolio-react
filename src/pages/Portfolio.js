@@ -17,6 +17,7 @@ import { useFire } from '../contexts/FireContext';
 import useFirestore from '../hooks/useFirestore';
 import '../styles/portfolio.css';
 import { teal } from '@material-ui/core/colors';
+import { fireStore } from '../firebase/config';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -27,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Portfolio = () => {
   const classes = useStyles();
-
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useFire();
   const { coins } = useCrypto();
   const { docs } = useFirestore(user.uid, 'coins');
   const [walletStats, setWalletStats] = useState({});
+  const collectionRef = fireStore.collection('users').doc(user.uid);
 
   useEffect(() => {
     let sumDiff = 0;
@@ -52,47 +54,54 @@ const Portfolio = () => {
       current: sumCurrent,
       difference: sumDiff,
     });
+    setIsLoading(false);
   }, [docs, coins]);
+
+  const handleDelete = (id) => {
+    collectionRef.collection('coins').doc(id).delete();
+  };
 
   return (
     <>
-      <Container>
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <ShopOutlinedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary='Total wallet buy price: '
-              secondary={walletStats.buyFor}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <AttachMoneyOutlinedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary='Wallet current value: '
-              secondary={walletStats.current}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <MonetizationOnOutlinedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary='Wallet profit/loss: '
-              secondary={walletStats.difference}
-            />
-          </ListItem>
-        </List>
-      </Container>
+      {!isLoading && (
+        <Container>
+          <List>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <ShopOutlinedIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary='Total wallet buy price'
+                secondary={walletStats.buyFor.toFixed(2) + ' $'}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <AttachMoneyOutlinedIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary='Wallet current value'
+                secondary={walletStats.current.toFixed(2) + ' $'}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <MonetizationOnOutlinedIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary='Wallet profit/loss'
+                secondary={walletStats.difference.toFixed(2) + ' $'}
+              />
+            </ListItem>
+          </List>
+        </Container>
+      )}
 
       <div className='portfolio-list'>
         <div className='portfolio-list-grid portfolio-list-column-names'>
@@ -101,6 +110,7 @@ const Portfolio = () => {
           <p>Buy For</p>
           <p>Current Price</p>
           <p>Profit/Loss</p>
+          <p>Delete</p>
         </div>
 
         {docs.map(({ coinName, id, quantity, buyPrice }) => {
@@ -123,6 +133,12 @@ const Portfolio = () => {
               <p>{parseFloat(buyPrice).toFixed(3)}$</p>
               <p>{currentCoin.current_price.toFixed(3)}$</p>
               <p>{priceDifference.toFixed(2)}$</p>
+              <button
+                className='delete-button'
+                onClick={() => handleDelete(id)}
+              >
+                X
+              </button>
             </div>
           );
         })}

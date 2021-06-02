@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const CoinDetailsModal = ({ props }) => {
   const { user } = useFire();
   const classes = useStyles();
-  const { isModalOpen, handleClose, modalCoin } = props;
+  const { isModalOpen, setIsModalOpen, handleClose, modalCoin } = props;
 
   return (
     <Container>
@@ -68,15 +68,33 @@ const CoinDetailsModal = ({ props }) => {
                 </li>
                 <li className='coin-details-list-item'>
                   <p>Price change 24h: </p>
-                  <p>{modalCoin.price_change_24h} $</p>
+                  <p
+                    style={
+                      parseFloat(modalCoin.price_change_24h) > 0
+                        ? { color: 'green' }
+                        : { color: 'red' }
+                    }
+                  >
+                    {modalCoin.price_change_24h} $
+                  </p>
                 </li>
                 <li className='coin-details-list-item'>
                   <p>Percentage change 24h </p>
-                  <p>{modalCoin.price_change_percentage_24h} %</p>
+                  <p
+                    style={
+                      parseFloat(modalCoin.price_change_percentage_24h) > 0
+                        ? { color: 'green' }
+                        : { color: 'red' }
+                    }
+                  >
+                    {modalCoin.price_change_percentage_24h} %
+                  </p>
                 </li>
               </ul>
             </div>
-            {user && <AddCoin modalCoin={modalCoin} />}
+            {user && (
+              <AddCoin modalCoin={modalCoin} setIsModalOpen={setIsModalOpen} />
+            )}
           </div>
         </Paper>
       </Modal>

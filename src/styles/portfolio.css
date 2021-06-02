@@ -1,6 +1,6 @@
 .portfolio-list-grid {
   display: grid;
-  grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.8fr 0.5fr 0.5fr 0.5fr 0.3fr 0.2fr;
   align-items: center;
 }
 .portfolio-list-column-names {
@@ -16,7 +16,11 @@
   max-width: 1200px;
 }
 
-.portfolio-list-item {
+.delete-button {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
 }
 
 .portfolio-list-item-name {

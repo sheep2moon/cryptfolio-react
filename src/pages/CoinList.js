@@ -29,7 +29,7 @@ const CoinList = () => {
         ))}
       {modalCoin && (
         <CoinDetailsModal
-          props={{ isModalOpen, modalCoin, handleClose }}
+          props={{ isModalOpen, setIsModalOpen, modalCoin, handleClose }}
         ></CoinDetailsModal>
       )}
     </Container>

@@ -34,6 +34,8 @@
 }
 
 .coin-details-list ul li {
+  background-color: #ffffff10;
+  margin: 2px 0;
   padding: 5px 0;
   display: block;
   width: 100%;
@@ -45,8 +47,16 @@
 }
 
 .add-coin-container {
+  background-color: #ffffff10;
+  padding: 5px;
+  margin-top: 1rem;
   display: flex;
+
   flex-direction: column;
+}
+
+.add-coin-container button {
+  margin-top: 10px;
 }
 
 @media screen and (max-width: 800px) {
